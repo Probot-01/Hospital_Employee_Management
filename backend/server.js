@@ -14,7 +14,8 @@ const employeeRolesRoutes = require('./routes/employee-roles');
 const employeeShiftsRoutes = require('./routes/employee-shifts');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 
 // Middleware
 app.use(cors());
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, '../frontend'))); // <-- Add this
 app.use('/api/employees', employeeRoutes);
 app.use('/api/departments', departmentRoutes);
 app.use('/api/leave', leaveRoutes);
+
 app.use('/api/salary', salaryRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/shifts', shiftsRoutes);
