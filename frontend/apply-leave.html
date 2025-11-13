@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Leave - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display:block;
+            margin-bottom:5px;
+            color:#4a5568;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border:1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #38a169;
+            color: #fff;
+            padding: 10px 20px;
+            border:none;
+            border-radius: 4px;
+            cursor:pointer;
+            font-size:16px;
+        }
+        button:hover {
+            background-color: #2f855a;
+        }
+        .back-btn {
+            margin-bottom: 20px;
+            display: inline-block;
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body onload="loadEmployeeId()">
+
+<div class="container">
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+    <h2>Apply for Leave</h2>
+
+    <form id="leaveForm">
+        <div class="form-group">
+            <label for="employeeId">Employee ID</label>
+            <input type="text" id="employeeId" name="employee_id" required >
+        </div>
+
+        <div class="form-group">
+            <label for="leaveType">Leave Type</label>
+            <select id="leaveType" name="leave_type" required>
+                <option value="">-- Select Leave Type --</option>
+                <option value="Sick Leave">Sick Leave</option>
+                <option value="Casual Leave">Casual Leave</option>
+                <option value="Paid Leave">Paid Leave</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="duration">Duration (days)</label>
+            <input type="number" id="duration" name="duration" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="start_date" required>
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" name="end_date" required>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+
+        <button type="submit">Submit Leave</button>
+    </form>
+</div>
+
+<script src="script2.js"></script>
+</body>
+</html>

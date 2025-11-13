@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Management - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="checkAuth(); loadDepartments();">
+    <div class="page-container">
+        <header class="header">
+            <h1>🏢 Department Management</h1>
+            <div class="header-right">
+                <button onclick="openAddDepartmentModal()" class="btn-add">+ Add Department</button>
+                <a href="dashboard.html" class="btn-back">← Back to Dashboard</a>
+                <button onclick="logout()" class="btn-archive">Logout</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Search Bar -->
+            <div class="search-section" style="margin-bottom: 20px;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input 
+                        type="number" 
+                        id="searchDepartmentId" 
+                        placeholder="Search by Department ID..." 
+                        class="search-input"
+                        style="flex: 1; padding: 10px; border: 1px solid #cbd5e0; border-radius: 4px;"
+                        min="1"
+                    >
+                    <button onclick="searchDepartment()" class="btn-primary">Search</button>
+                    <button onclick="clearDepartmentSearch()" class="btn-secondary">Clear</button>
+                </div>
+                <div id="departmentSearchResult" style="margin-top: 10px;"></div>
+            </div>
+
+            <!-- Department Table -->
+            <div class="profile-section">
+                <h3>All Departments</h3>
+                <div style="overflow-x: auto;">
+                    <table class="leave-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Active Employees</th>
+                                <th>On Duty</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="departmentTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: #718096;">Loading departments...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Department Modal -->
+    <div id="addDepartmentModal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Department</h3>
+            <form id="addDepartmentForm" onsubmit="submitAddDepartment(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addDeptName">Department Name *</label>
+                        <input type="text" id="addDeptName" required placeholder="e.g., Cardiology">
+                    </div>
+                    <div class="form-group">
+                        <label for="addDeptLocation">Location</label>
+                        <input type="text" id="addDeptLocation" placeholder="e.g., Building A, Floor 2">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addDeptPassword">Password *</label>
+                        <input type="password" id="addDeptPassword" required placeholder="Department password">
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeAddDepartmentModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Add Department</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Department Modal -->
+    <div id="editDepartmentModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Department</h3>
+            <form id="editDepartmentForm" onsubmit="submitEditDepartment(event)">
+                <input type="hidden" id="editDeptId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editDeptName">Department Name *</label>
+                        <input type="text" id="editDeptName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDeptLocation">Location</label>
+                        <input type="text" id="editDeptLocation">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editDeptPassword">New Password (leave empty to keep current)</label>
+                        <input type="password" id="editDeptPassword" placeholder="Enter new password">
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeEditDepartmentModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Update Department</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="departments-management.js"></script>
+</body>
+</html>
+

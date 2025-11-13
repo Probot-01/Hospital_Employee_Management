@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="checkAuth(); loadDashboard();">
+    <div class="page-container">
+        <header class="header">
+            <h1>🏥 Hospital Management Dashboard</h1>
+            <div class="header-right">
+               
+                <button onclick="logout()" class="btn-archive">Logout</button>
+            </div>
+        </header>
+
+
+        <div class="content">
+                <a href="employees.html" class="btn-add">Manage Employees</a>
+                <a href="departments.html" class="btn-secondary">Manage Departments</a>
+               
+                <a href="leaves.html" class="btn-secondary">Manage Leaves</a>
+                <a href="active-employees.html" class="btn-back">View All Employees</a>
+            <h2 style="color: #2d3748; margin-bottom: 20px;">Departments</h2>
+         
+
+            
+            <div id="departmentGrid" class="department-grid">
+
+                
+                
+
+
+                <!-- Department cards will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

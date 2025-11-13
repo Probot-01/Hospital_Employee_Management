@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift Management - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="checkAuth(); loadShifts();">
+    <div class="page-container">
+        <header class="header">
+            <h1>⏰ Shift Management</h1>
+            <div class="header-right">
+                <button onclick="openAddShiftModal()" class="btn-add">+ Add Shift</button>
+                <a href="dashboard.html" class="btn-back">← Back to Dashboard</a>
+                <button onclick="logout()" class="btn-archive">Logout</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Shift Table -->
+            <div class="profile-section">
+                <h3>All Shifts</h3>
+                <div style="overflow-x: auto;">
+                    <table class="leave-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Shift Type</th>
+                                <th>Shift Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="shiftTableBody">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #718096;">Loading shifts...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Shift Modal -->
+    <div id="addShiftModal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Shift</h3>
+            <form id="addShiftForm" onsubmit="submitAddShift(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addShiftType">Shift Type *</label>
+                        <select id="addShiftType" required>
+                            <option value="">Select Type</option>
+                            <option value="Day">Day</option>
+                            <option value="Night">Night</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="addShiftTime">Shift Time</label>
+                        <input type="text" id="addShiftTime" placeholder="e.g., 8:00 AM - 4:00 PM">
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeAddShiftModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Add Shift</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Shift Modal -->
+    <div id="editShiftModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Shift</h3>
+            <form id="editShiftForm" onsubmit="submitEditShift(event)">
+                <input type="hidden" id="editShiftId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editShiftType">Shift Type *</label>
+                        <select id="editShiftType" required>
+                            <option value="">Select Type</option>
+                            <option value="Day">Day</option>
+                            <option value="Night">Night</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editShiftTime">Shift Time</label>
+                        <input type="text" id="editShiftTime">
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeEditShiftModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Update Shift</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="shifts-management.js"></script>
+</body>
+</html>
+

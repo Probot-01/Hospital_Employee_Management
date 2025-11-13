@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Management - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="checkAuth(); loadRoles();">
+    <div class="page-container">
+        <header class="header">
+            <h1>🎭 Role Management</h1>
+            <div class="header-right">
+                <button onclick="openAddRoleModal()" class="btn-add">+ Add Role</button>
+                <a href="dashboard.html" class="btn-back">← Back to Dashboard</a>
+                <button onclick="logout()" class="btn-archive">Logout</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Role Table -->
+            <div class="profile-section">
+                <h3>All Roles</h3>
+                <div style="overflow-x: auto;">
+                    <table class="leave-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Role Name</th>
+                                <th>Role Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="roleTableBody">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #718096;">Loading roles...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Role Modal -->
+    <div id="addRoleModal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Role</h3>
+            <form id="addRoleForm" onsubmit="submitAddRole(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addRoleName">Role Name *</label>
+                        <input type="text" id="addRoleName" required placeholder="e.g., Doctor, Nurse">
+                    </div>
+                    <div class="form-group">
+                        <label for="addRoleType">Role Type</label>
+                        <input type="text" id="addRoleType" placeholder="e.g., Medical, Administrative">
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeAddRoleModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Add Role</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Role Modal -->
+    <div id="editRoleModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Role</h3>
+            <form id="editRoleForm" onsubmit="submitEditRole(event)">
+                <input type="hidden" id="editRoleId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editRoleName">Role Name *</label>
+                        <input type="text" id="editRoleName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRoleType">Role Type</label>
+                        <input type="text" id="editRoleType">
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeEditRoleModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Update Role</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="roles-management.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Active Employees - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="checkAuth(); loadActiveEmployees();">
+    <div class="page-container">
+        <header class="header">
+            <h1>All Active Employees</h1>
+            <div class="header-right">
+                <a href="employees.html" class="btn-add">Full Employee Management</a>
+                <a href="dashboard.html" class="btn-back">← Back to Dashboard</a>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalEmployees">0</div>
+                    <div class="stat-label">TOTAL EMPLOYEES</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="onDutyCount" style="color: #48bb78;">0</div>
+                    <div class="stat-label">ON DUTY</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="offDutyCount" style="color: #f56565;">0</div>
+                    <div class="stat-label">OFF DUTY</div>
+                </div>
+            </div>
+
+            <!-- Employee Table -->
+            <div class="profile-section">
+                <h3>Employee Directory</h3>
+                <div style="overflow-x: auto;">
+                    <table class="leave-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Contact</th>
+                                <th>Roles</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeeTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #718096;">Loading employees...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Enhanced loadActiveEmployees with statistics
+        async function loadActiveEmployees() {
+            try {
+                const response = await fetch(`${API_URL}/employees`);
+                const employees = await response.json();
+                
+                // Calculate statistics
+                const totalCount = employees.length;
+                const onDutyCount = employees.filter(e => e.is_on_duty).length;
+                const offDutyCount = totalCount - onDutyCount;
+                
+                // Update statistics
+                document.getElementById('totalEmployees').textContent = totalCount;
+                document.getElementById('onDutyCount').textContent = onDutyCount;
+                document.getElementById('offDutyCount').textContent = offDutyCount;
+                
+                // Populate table
+                const tbody = document.getElementById('employeeTableBody');
+                tbody.innerHTML = '';
+                
+                if (employees.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #718096;">No employees found</td></tr>';
+                    return;
+                }
+                
+                employees.forEach(emp => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><strong>${emp.name}</strong></td>
+                        <td>${emp.department_name}</td>
+                        <td>${emp.contact_number || 'N/A'}</td>
+                        <td>${emp.roles || 'No role'}</td>
+                        <td>
+                            <span class="status-indicator ${emp.is_on_duty ? 'status-on-duty' : 'status-off-duty'}"></span>
+                            ${emp.is_on_duty ? 'On Duty' : 'Off Duty'}
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading active employees:', error);
+                showAlert('Failed to load employees', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

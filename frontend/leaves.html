@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="checkAuth(); loadLeaveRecords();">
+    <div class="page-container">
+        <header class="header">
+            <h1>📅 Leave Management</h1>
+            <div class="header-right">
+                <button onclick="openApplyLeaveModal()" class="btn-add">+ Apply Leave</button>
+                <a href="dashboard.html" class="btn-back">← Back to Dashboard</a>
+                <button onclick="logout()" class="btn-archive">Logout</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Leave Records Table -->
+            <div class="profile-section">
+                <h3>All Leave Records</h3>
+                <div style="overflow-x: auto;">
+                    <table class="leave-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee ID</th>
+                                <th>Leave Type</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaveTableBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: #718096;">Loading leave records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apply Leave Modal -->
+    <div id="applyLeaveModal" class="modal">
+        <div class="modal-content">
+            <h3>Apply for Leave</h3>
+            <form id="applyLeaveForm" onsubmit="submitApplyLeave(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="leaveEmployeeId">Employee ID *</label>
+                        <input type="text" id="leaveEmployeeId" required placeholder="e.g., EMP001">
+                    </div>
+                    <div class="form-group">
+                        <label for="leaveType">Leave Type *</label>
+                        <select id="leaveType" required>
+                            <option value="">Select Type</option>
+                            <option value="Sick Leave">Sick Leave</option>
+                            <option value="Casual Leave">Casual Leave</option>
+                            <option value="Paid Leave">Paid Leave</option>
+                            <option value="Vacation">Vacation</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="leaveStartDate">Start Date *</label>
+                        <input type="date" id="leaveStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="leaveEndDate">End Date *</label>
+                        <input type="date" id="leaveEndDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="leaveDuration">Duration (days)</label>
+                        <input type="number" id="leaveDuration" min="1" placeholder="Auto-calculated">
+                    </div>
+                    <div class="form-group">
+                        <label for="leaveStatus">Status</label>
+                        <select id="leaveStatus">
+                            <option value="Pending">Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeApplyLeaveModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Apply Leave</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Leave Status Modal -->
+    <div id="updateLeaveModal" class="modal">
+        <div class="modal-content">
+            <h3>Update Leave Status</h3>
+            <form id="updateLeaveForm" onsubmit="submitUpdateLeave(event)">
+                <input type="hidden" id="updateLeaveId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="updateLeaveType">Leave Type</label>
+                        <input type="text" id="updateLeaveType" readonly class="read-only">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateLeaveDuration">Duration (days)</label>
+                        <input type="number" id="updateLeaveDuration" readonly class="read-only">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="updateLeaveStartDate">Start Date</label>
+                        <input type="date" id="updateLeaveStartDate" readonly class="read-only">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateLeaveEndDate">End Date</label>
+                        <input type="date" id="updateLeaveEndDate" readonly class="read-only">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="updateLeaveStatus">Status *</label>
+                        <select id="updateLeaveStatus" required>
+                            <option value="Pending">Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeUpdateLeaveModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="leaves-management.js"></script>
+</body>
+</html>
+

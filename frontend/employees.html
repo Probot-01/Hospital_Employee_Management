@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="checkAuth(); loadEmployees();">
+    <div class="page-container">
+        <header class="header">
+            <h1>👥 Employee Management</h1>
+            <div class="header-right">
+                <button onclick="openAddEmployeeModal()" class="btn-add">+ Add Employee</button>
+                <a href="dashboard.html" class="btn-back">← Back to Dashboard</a>
+                <button onclick="logout()" class="btn-archive">Logout</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Search Bar -->
+            <div class="search-section" style="margin-bottom: 20px;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input 
+                        type="text" 
+                        id="searchEmployeeId" 
+                        placeholder="Search by Employee ID..." 
+                        class="search-input"
+                        style="flex: 1; padding: 10px; border: 1px solid #cbd5e0; border-radius: 4px;"
+                    >
+                    <button onclick="searchEmployee()" class="btn-primary">Search</button>
+                    <button onclick="clearSearch()" class="btn-secondary">Clear</button>
+                </div>
+                <div id="searchResult" style="margin-top: 10px;"></div>
+            </div>
+
+            <!-- Employee Table -->
+            <div class="profile-section">
+                <h3>All Employees</h3>
+                <div style="overflow-x: auto;">
+                    <table class="leave-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Department</th>
+                                <th>Roles</th>
+                                <th>Status</th>
+                                <th>Date Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeeTableBody">
+                            <tr>
+                                <td colspan="9" style="text-align: center; color: #718096;">Loading employees...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Employee Modal -->
+    <div id="addEmployeeModal" class="modal">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <h3>Add New Employee</h3>
+            <form id="addEmployeeForm" onsubmit="submitAddEmployee(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addUniqueId">Employee ID *</label>
+                        <input type="text" id="addUniqueId" required placeholder="e.g., EMP001">
+                    </div>
+                    <div class="form-group">
+                        <label for="addName">Full Name *</label>
+                        <input type="text" id="addName" required placeholder="Enter full name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addEmail">Email *</label>
+                        <input type="email" id="addEmail" required placeholder="employee@hospital.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="addContact">Contact Number *</label>
+                        <input type="text" id="addContact" required placeholder="Phone number">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addDepartment">Department *</label>
+                        <select id="addDepartment" required>
+                            <option value="">Select Department</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="addRoles">Roles * (Hold Ctrl/Cmd for multiple)</label>
+                        <select id="addRoles" multiple size="3" required>
+                            <!-- Roles will be loaded dynamically -->
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addDegree">Degree *</label>
+                        <input type="text" id="addDegree" required placeholder="e.g., MBBS, MD">
+                    </div>
+                    <div class="form-group">
+                        <label for="addInstitution">Institution *</label>
+                        <input type="text" id="addInstitution" required placeholder="University name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addYearAwarded">Year Awarded *</label>
+                        <input type="number" id="addYearAwarded" required placeholder="e.g., 2020" min="1950" max="2025">
+                    </div>
+                    <div class="form-group">
+                        <label for="addBaseSalary">Base Salary *</label>
+                        <input type="number" id="addBaseSalary" required placeholder="e.g., 50000" min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addBonus">Bonus</label>
+                        <input type="number" id="addBonus" placeholder="e.g., 5000" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="addPayGrade">Pay Grade *</label>
+                        <input type="text" id="addPayGrade" required placeholder="e.g., A1">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addShift">Shift *</label>
+                        <select id="addShift" required>
+                            <option value="">Select Shift</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeAddEmployeeModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Add Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Employee Modal -->
+    <div id="editEmployeeModal" class="modal">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <h3>Edit Employee</h3>
+            <form id="editEmployeeForm" onsubmit="submitEditEmployee(event)">
+                <input type="hidden" id="editUniqueId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editName">Full Name</label>
+                        <input type="text" id="editName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email *</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editContact">Contact Number *</label>
+                        <input type="text" id="editContact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDepartment">Department *</label>
+                        <select id="editDepartment" required>
+                            <option value="">Select Department</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editIsOnDuty">On Duty Status</label>
+                        <select id="editIsOnDuty" required>
+                            <option value="0">Off Duty</option>
+                            <option value="1">On Duty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" onclick="closeEditEmployeeModal()" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Update Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="employees-management.js"></script>
+</body>
+</html>
+

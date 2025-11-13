@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Profile - Hospital Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="checkAuth(); loadEmployeeProfile();">
+    <div class="page-container">
+        <header class="header">
+            <h1>Employee Profile</h1>
+            <div class="header-right">
+                <button id="toggleDutyBtn" class="btn-toggle">Mark On Duty</button>
+                <a href="department-employees.html" class="btn-back">← Back to Department</a>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="profile-container">
+                <!-- Basic Information -->
+                <div class="profile-section">
+                    <h3>Basic Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="empName">Full Name</label>
+                            <input type="text" id="empName" class="read-only" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="empId">Employee ID</label>
+                            <input type="text" id="empId" class="read-only" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="empEmail">Email</label>
+                            <input type="email" id="empEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="empContact">Contact Number</label>
+                            <input type="text" id="empContact">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="empDepartment">Department</label>
+                            <select id="empDepartment">
+                                <option value="">Select Department</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateJoined">Date Joined</label>
+                            <input type="text" id="dateJoined" class="read-only" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Qualification -->
+                <div class="profile-section">
+                    <h3>Qualification</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="degree">Degree</label>
+                            <input type="text" id="degree" class="read-only" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="institution">Institution</label>
+                            <input type="text" id="institution" class="read-only" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="yearAwarded">Year Awarded</label>
+                            <input type="text" id="yearAwarded" class="read-only" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roles -->
+                <div class="profile-section">
+                    <h3>Roles</h3>
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label for="roleDisplay">Assigned Roles</label>
+                            <input type="text" id="roleDisplay" class="read-only" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Salary Information -->
+                <div class="profile-section">
+                    <h3>Salary Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="baseSalary">Base Salary</label>
+                            <input type="number" id="baseSalary">
+                        </div>
+                        <div class="form-group">
+                            <label for="bonus">Bonus</label>
+                            <input type="number" id="bonus">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="payGrade">Pay Grade</label>
+                            <input type="text" id="payGrade">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shift Information -->
+                <div class="profile-section">
+                    <h3>Shift Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="shiftType">Shift Type</label>
+                            <select id="shiftType">
+                                <option value="">Select Shift</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shiftTime">Shift Time</label>
+                            <input type="text" id="shiftTime" class="read-only" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leave Records -->
+                <div class="profile-section">
+                    <h3>Leave Records</h3>
+                    <table class="leave-table">
+                        <thead>
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaveTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #718096;">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="profile-section">
+                    <button onclick="saveEmployeeChanges()" class="btn-save">Save Changes</button>
+                    <button onclick="archiveEmployee()" class="btn-archive">Archive Employee</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
