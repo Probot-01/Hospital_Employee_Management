@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:3000/api';
+var API_URL = 'https://hospital-employee-management.onrender.com/api';
+
 
 // Load employee ID function (if needed for autofill or validation)
 function loadEmployeeId() {

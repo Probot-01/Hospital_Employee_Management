@@ -2,7 +2,8 @@
 
 // Ensure API_URL is defined (in case script.js didn't load)
 if (typeof API_URL === 'undefined') {
-    var API_URL = 'http://localhost:3000/api';
+    var API_URL = 'https://hospital-employee-management.onrender.com/api';
+
 }
 
 // Ensure showAlert is available
